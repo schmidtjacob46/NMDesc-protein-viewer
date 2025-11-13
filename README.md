@@ -17,7 +17,7 @@ NMDesc-protein-viewer/
 │   ├── protein_features_viewer_with_variants.html   # Live interactive viewer
 │   └── protein_data/                                # ~20k JSON protein annotation files
 │
-├── lightweight_all_proteins.ipynb                   # Notebook used to generate HTML + JSONs
+├── generate_protein_viewer_data.ipynb                   # Notebook used to generate HTML + JSONs
 ├── NIHMS1818854-supplement-2.xlsx                   # Supplemental Table S4 from Banani et al.
 ├── README.md
 ├── LICENSE
@@ -129,7 +129,7 @@ Optional overlay used when user enters variants.
 
 # 🧪 Reproducing the Data (Notebook Workflow)
 
-The file **`lightweight_all_proteins.ipynb`** contains all preprocessing steps to regenerate:
+The file **`generate_protein_viewer_data.ipynb`** contains all preprocessing steps to regenerate:
 - **protein_data/*.json**  
 - **protein_features_viewer_with_variants.html**
 
