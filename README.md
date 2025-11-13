@@ -8,7 +8,25 @@ https://schmidtjacob46.github.io/NMDesc-protein-viewer/protein_features_viewer_w
 
 ---
 
-## 🚀 Features
+# 📁 Repository Contents
+
+```
+NMDesc-protein-viewer/
+│
+├── docs/
+│   ├── protein_features_viewer_with_variants.html   # Live interactive viewer
+│   └── protein_data/                                # ~20k JSON protein annotation files
+│
+├── lightweight_all_proteins.ipynb                   # Notebook used to generate HTML + JSONs
+├── NIHMS1818854-supplement-2.xlsx                   # Supplemental Table S4 from Banani et al.
+├── README.md
+├── LICENSE
+└── .gitignore
+```
+
+---
+
+# 🚀 Features
 
 ### 🧭 Protein Navigation
 - Fast dropdown selection for **20,000+ UniProt/Ensembl proteins**
@@ -17,100 +35,86 @@ https://schmidtjacob46.github.io/NMDesc-protein-viewer/protein_features_viewer_w
 ### 🧩 Feature Visualization
 Tracks included:
 - Protein domains  
-- UniProt protein features  
-- PTMs  
-- SLiMs  
-- MORFs  
-- NLS/NES signals  
+- UniProt features  
+- PTMs (e.g., phosphorylation)  
+- SLiMs (ELM)  
+- MORFs (MFIB)  
+- NLS/NES (NLSdb)  
 - Low-complexity sequences  
 - Backbone domains  
 
-Toggle: **Show/Hide single-site features**
+Toggle available: **Show/Hide single-site features**
 
 ### 🎯 Variant Overlay
-Supports:
-- A123T  
-- 123A>T  
-- 123  
-- comma/space-separated lists  
+Accepts:
+- `A123T`
+- `123A>T`
+- `123`
+- comma‑ or space‑separated lists
 
-Variants appear as:
-- vertical markers  
-- clickable variant chips  
+Displayed as:
+- vertical red markers  
+- clickable variant “chips”  
 - hover-text annotation  
 
 ### 🔍 Plot Interaction
-- pan/zoom  
+- pan / zoom  
 - reset zoom  
-- high-quality hover labels  
-
----
-
-## 📁 Repository Structure
-
-```
-NMDesc-protein-viewer/
-│
-├── docs/
-│   ├── protein_features_viewer_with_variants.html
-│   └── protein_data/
-│
-├── README.md
-├── .gitignore
-└── LICENSE
-```
-
-GitHub Pages publishes from the `docs/` directory.
+- detailed hover information  
 
 ---
 
 # 📊 Data Sources  
-### *(Integrated directly from Banani et al., Supplemental Table S4 — primary source)*
+### *(From Banani et al., Supplemental Table S4 — primary source)*
 
-All protein features displayed in this viewer were parsed directly from the supplemental workbook associated with:
+All features were parsed from:
 
-**Banani SF, Afeyan LK, Hawken SW, Henninger JE, Dall’Agnese A, Clark VE, Platt JM, Oksuz Ö, Hannett NE, Sagi I, Lee TI, Young RA.**  
+**Banani SF, Afeyan LK, Hawken SW, Henninger JE, et al.**  
 **Genetic Variation Associated with Condensate Dysregulation in Disease.**  
 *Cell.* 2023;184(2):341–359.e25.  
 doi:10.1016/j.cell.2023.01.013  
-PMC: 9339523  
+PMC 9339523  
 https://pmc.ncbi.nlm.nih.gov/articles/PMC9339523/
 
-This paper’s **Supplemental Table S4** contains all canonical protein sequences, mapped structural features, linear motifs, MORFs, PTMs, NLS/NES, LCS regions, and pathogenic mutations used in the NMDesc analysis.
-
----
-
-## ✔ Breakdown of Table S4 Sections Used in This Viewer
-
-### **A. Human Protein Sequences**  
-Used for:
-- protein backbone length  
-- ID mapping  
-- amino acid coordinate system  
-
-### **B. Mapped Protein Features**  
-Integrated from:
-- UniProt protein features  
+The supplemental workbook (**NIHMS1818854-supplement-2.xlsx**) provides:
+- canonical protein sequences  
+- mapped UniProt features  
 - InterPro domains  
 - ELM SLiMs  
 - MFIB MORFs  
 - PhosphoSitePlus PTMs  
-- NLSdb NLS/NES sequences  
+- NLSdb nuclear localization/export signals  
+- LCS regions  
+- pathogenic mutations affecting condensate-promoting features  
 
-### **G. LCS Mapping Across the Proteome**  
-Used for:
-- low complexity sequence track (green blocks)
+---
 
-### **H. Pathogenic Mutations Affecting Condensate-Promoting Features**  
-Used optionally for:
-- variant overlays when loaded by the user  
+## ✔ Breakdown of Table S4 Sections Used
+
+### **A. Human Protein Sequences**
+Backbone length, ID mapping, sequence.
+
+### **B. Mapped Protein Features**
+Includes:
+- UniProt features  
+- InterPro domains  
+- ELM SLiMs  
+- MFIB MORFs  
+- PhosphoSitePlus PTMs  
+- NLSdb NLS/NES  
+
+### **G. LCS Mapping Across the Proteome**
+Used for LCS track.
+
+### **H. Pathogenic Mutations Affecting Condensate-Promoting Features**
+Optional overlay used when user enters variants.
 
 ---
 
 ## ✔ Summary Table
 
-| Track | Table S4 Section | Database Source |
-|-------|-------------------|-----------------|
+| Viewer Track | Table S4 Section | Source Database |
+|--------------|------------------|-----------------|
 | Backbone | A | UniProt |
 | Domains | B | InterPro |
 | Protein Features | B | UniProt |
@@ -118,20 +122,41 @@ Used optionally for:
 | MORFs | B | MFIB |
 | PTMs | B | PhosphoSitePlus |
 | NLS/NES | B | NLSdb |
-| LCS | G | LCS mapping (Banani et al.) |
-| Mutations | C/D/H | Provided in Table S4 |
+| LCS | G | Banani LCS mapping |
+| Mutations (optional) | C/D/H | Provided in workbook |
 
 ---
 
-# 🌐 Hosting
+# 🧪 Reproducing the Data (Notebook Workflow)
+
+The file **`lightweight_all_proteins.ipynb`** contains all preprocessing steps to regenerate:
+- **protein_data/*.json**  
+- **protein_features_viewer_with_variants.html**
+
+Workflow summary:
+1. Load `NIHMS1818854-supplement-2.xlsx`  
+2. Parse Table S4 sections  
+3. Normalize annotation tracks  
+4. Build JSON files (one per protein)  
+5. Generate final viewer HTML with embedded JavaScript  
+
+This provides full reproducibility for all files hosted in `/docs`.
+
+---
+
+# 🌐 Hosting via GitHub Pages
 
 GitHub Pages configuration:
 - **Branch:** `main`
 - **Folder:** `docs/`
 
+The site updates automatically when files inside `/docs` are modified.
+
 ---
 
 # 📥 Updating the Viewer
+
+To update the public viewer:
 
 ```
 git add docs/
@@ -139,10 +164,12 @@ git commit -m "Update viewer"
 git push
 ```
 
+Deployment finishes in ~1–2 minutes.
+
 ---
 
 # 📜 License
-MIT License.
+This project is released under the **MIT License**.
 
 ---
 
